@@ -1,0 +1,10 @@
+C:\dev\C#\FusePlug\Fuse.API\bin\Debug\Fuse.API.dll
+C:\dev\C#\FusePlug\Fuse.API\bin\Debug\Fuse.API.pdb
+C:\dev\C#\FusePlug\Fuse.API\obj\Debug\Fuse.API.csprojAssemblyReference.cache
+C:\dev\C#\FusePlug\Fuse.API\obj\Debug\Fuse.API.dll
+C:\dev\C#\FusePlug\Fuse.API\obj\Debug\Fuse.API.pdb
+C:\dev\C#\FuseMod\Fuse.API\bin\Debug\Fuse.API.dll
+C:\dev\C#\FuseMod\Fuse.API\bin\Debug\Fuse.API.pdb
+C:\dev\C#\FuseMod\Fuse.API\obj\Debug\Fuse.API.csprojAssemblyReference.cache
+C:\dev\C#\FuseMod\Fuse.API\obj\Debug\Fuse.API.dll
+C:\dev\C#\FuseMod\Fuse.API\obj\Debug\Fuse.API.pdb
