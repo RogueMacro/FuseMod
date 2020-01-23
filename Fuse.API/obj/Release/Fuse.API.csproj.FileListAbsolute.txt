@@ -1,0 +1,5 @@
+C:\dev\C#\FuseMod\Fuse.API\bin\Release\Fuse.API.dll
+C:\dev\C#\FuseMod\Fuse.API\bin\Release\Fuse.API.pdb
+C:\dev\C#\FuseMod\Fuse.API\obj\Release\Fuse.API.csprojAssemblyReference.cache
+C:\dev\C#\FuseMod\Fuse.API\obj\Release\Fuse.API.dll
+C:\dev\C#\FuseMod\Fuse.API\obj\Release\Fuse.API.pdb
