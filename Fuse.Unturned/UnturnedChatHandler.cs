@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
+﻿using Fuse.Core.Commands;
+using Fuse.Core.Console;
 using SDG.Unturned;
+using System;
 using UnityEngine;
-using Fuse.Core;
-using SDG.Framework.Translations;
 
 namespace Fuse.Unturned
 {
@@ -12,11 +10,9 @@ namespace Fuse.Unturned
     {
         public override event OnChatEventHandler OnChat;
 
-        public static void SetAsCurrent()
+        protected override void OnInit()
         {
-            var chatHandler = new UnturnedChatHandler();
-            ChatManager.onChatted += chatHandler.OnChatted;
-            Current = chatHandler;
+            ChatManager.onChatted += OnChatted;
         }
 
         private void OnChatted(SteamPlayer player, EChatMode mode, ref Color chatted, ref bool rich, string text, ref bool visible)
@@ -30,16 +26,18 @@ namespace Fuse.Unturned
             if (!text.StartsWith("/"))
                 return;
 
-            CommandHandler.HandleCommand(text);
+            CommandHandler.Current.HandleText(text);
         }
 
-        public override void Say(string text, params KeyValuePair<string, object>[] args)
+        public override void Say(string text, params (string, object)[] tArgs)
         {
-            var isRich = (bool) args.GetOrDefault("isRich", false);
-            
+            var args = tArgs.ToKeyValuePairArray();
+
+            var isRich = (bool)args.GetOrDefault("isRich", false);
+
             var color = args.ContainsKey("color")
-                ? (Color) args.GetOrDefault("color", Color.white)
-                : (bool) args.GetOrDefault("isServerMessage", false)
+                ? (Color)args.GetOrDefault("color", Color.white)
+                : (bool)args.GetOrDefault("isServerMessage", false)
                     ? Color.green
                     : Color.white;
 

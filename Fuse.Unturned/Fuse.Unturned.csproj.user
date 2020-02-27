@@ -5,4 +5,7 @@
     <StartProgram>C:\dev\C#\FuseMod\UnturnedGame\Unturned\Unturned.exe</StartProgram>
     <StartArguments>-nographics -batchmode +lanserver/TestServer</StartArguments>
   </PropertyGroup>
+  <PropertyGroup>
+    <ProjectView>ProjectFiles</ProjectView>
+  </PropertyGroup>
 </Project>

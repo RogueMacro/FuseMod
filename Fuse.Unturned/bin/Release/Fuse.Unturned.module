@@ -2,8 +2,7 @@
     "IsEnabled": true,
     "Name": "Fuse.Unturned",
     "Version": "0.0.0.1",
-    "Assemblies":
-    [
+    "Assemblies": [
         {
             "Path": "/Fuse.Unturned.dll",
             "Role": "Server"

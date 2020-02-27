@@ -1,8 +1,9 @@
-﻿using System.IO;
-using System.Reflection;
-using Fuse.Core;
+﻿using Fuse.Core.Initialization;
+using Fuse.Core.Utilities;
 using SDG.Framework.Modules;
 using SDG.Unturned;
+using System.IO;
+using System.Reflection;
 
 namespace Fuse.Unturned
 {
@@ -10,22 +11,16 @@ namespace Fuse.Unturned
     {
         public void initialize()
         {
-            UnturnedChatHandler.SetAsCurrent();
-            FuseInitializer.Init();
-
-            var serverId = Provider.serverID;
             var dllPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             var fileManager = new FileManager(dllPath);
-            fileManager.Cd("../../Servers".ExtendPath(serverId));
+            fileManager.Cd("../../Servers".ExtendPath(Provider.serverID));
 
-            if (!fileManager.DirectoryExists("Fuse"))
-                FuseInitializer.InitFiles(fileManager);
+            FuseInitializer.Initialize(fileManager);
         }
 
         public void shutdown()
         {
-            
         }
     }
 }

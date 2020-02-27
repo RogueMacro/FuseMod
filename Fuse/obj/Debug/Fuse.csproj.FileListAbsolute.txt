@@ -1,0 +1,11 @@
+C:\dev\C#\FuseMod\Fuse\bin\Debug\Fuse.dll.config
+C:\dev\C#\FuseMod\Fuse\bin\Debug\Fuse.dll
+C:\dev\C#\FuseMod\Fuse\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\dev\C#\FuseMod\Fuse\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+C:\dev\C#\FuseMod\Fuse\obj\Debug\Fuse.Properties.Resources.resources
+C:\dev\C#\FuseMod\Fuse\obj\Debug\Fuse.csproj.GenerateResource.cache
+C:\dev\C#\FuseMod\Fuse\obj\Debug\Fuse.csproj.CopyComplete
+C:\dev\C#\FuseMod\Fuse\obj\Debug\Fuse.dll
+C:\dev\C#\FuseMod\Fuse\bin\Debug\netstandard.dll
+C:\dev\C#\FuseMod\Fuse\bin\Debug\Microsoft.Extensions.DependencyInjection.dll
+C:\dev\C#\FuseMod\Fuse\bin\Debug\Microsoft.Extensions.DependencyInjection.xml

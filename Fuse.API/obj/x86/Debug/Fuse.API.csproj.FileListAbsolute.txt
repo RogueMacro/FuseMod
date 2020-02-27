@@ -1,5 +1,0 @@
-C:\dev\C#\FuseMod\Fuse.API\bin\x86\Debug\Fuse.API.dll
-C:\dev\C#\FuseMod\Fuse.API\bin\x86\Debug\Fuse.API.pdb
-C:\dev\C#\FuseMod\Fuse.API\obj\x86\Debug\Fuse.API.dll
-C:\dev\C#\FuseMod\Fuse.API\obj\x86\Debug\Fuse.API.pdb
-C:\dev\C#\FuseMod\Fuse.API\obj\x86\Debug\Fuse.API.csprojAssemblyReference.cache
