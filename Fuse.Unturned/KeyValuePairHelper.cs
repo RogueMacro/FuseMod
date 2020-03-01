@@ -6,17 +6,17 @@ namespace Fuse.Unturned
 {
     public static class KeyValuePairHelper
     {
-        public static TV Get<TK, TV>(this KeyValuePair<TK, TV>[] array, TK key)
+        public static TV Get<TK, TV>(this IEnumerable<KeyValuePair<TK, TV>> array, TK key)
         {
             return array.First(pair => Compare(pair.Key, key)).Value;
         }
 
-        public static TV GetOrDefault<TK, TV>(this KeyValuePair<TK, TV>[] array, TK key)
+        public static TV GetOrDefault<TK, TV>(this IEnumerable<KeyValuePair<TK, TV>> array, TK key)
         {
             return array.FirstOrDefault(pair => Compare(pair.Key, key)).Value;
         }
 
-        public static TV GetOrDefault<TK, TV>(this KeyValuePair<TK, TV>[] array, TK key, TV defaultValue)
+        public static TV GetOrDefault<TK, TV>(this IEnumerable<KeyValuePair<TK, TV>> array, TK key, TV defaultValue)
         {
             return array.ContainsKeyAndType(key, typeof(TV)) 
                 ? array.FirstOrDefault(pair => Compare(pair.Key, key)).Value 

@@ -1,8 +1,0 @@
-C:\dev\C#\FuseMod\Fuse.Core\bin\Release\Fuse.Core.dll
-C:\dev\C#\FuseMod\Fuse.Core\bin\Release\Fuse.Core.pdb
-C:\dev\C#\FuseMod\Fuse.Core\bin\Release\Fuse.API.dll
-C:\dev\C#\FuseMod\Fuse.Core\bin\Release\Fuse.API.pdb
-C:\dev\C#\FuseMod\Fuse.Core\obj\Release\Fuse.Core.csprojAssemblyReference.cache
-C:\dev\C#\FuseMod\Fuse.Core\obj\Release\Fuse.Core.csproj.CopyComplete
-C:\dev\C#\FuseMod\Fuse.Core\obj\Release\Fuse.Core.dll
-C:\dev\C#\FuseMod\Fuse.Core\obj\Release\Fuse.Core.pdb

@@ -1,10 +1,9 @@
-C:\dev\C#\FuseMod\Fuse.Unturned\bin\Debug\Fuse.Unturned.module
-C:\dev\C#\FuseMod\Fuse.Unturned\bin\Debug\English.dat
-C:\dev\C#\FuseMod\Fuse.Unturned\bin\Debug\Fuse.Unturned.dll
-C:\dev\C#\FuseMod\Fuse.Unturned\bin\Debug\Fuse.Unturned.pdb
-C:\dev\C#\FuseMod\Fuse.Unturned\obj\Debug\Fuse.Unturned.csprojAssemblyReference.cache
-C:\dev\C#\FuseMod\Fuse.Unturned\obj\Debug\Fuse.Unturned.dll
-C:\dev\C#\FuseMod\UnturnedGame\Unturned\Modules\Fuse.Unturned\Fuse.Unturned.dll
-C:\dev\C#\FuseMod\Fuse.Unturned\obj\Debug\Fuse.Unturned.csproj.CopyComplete
 C:\dev\C#\FuseMod\UnturnedGame\Unturned\Modules\Fuse.Unturned\Fuse.Unturned.module
 C:\dev\C#\FuseMod\UnturnedGame\Unturned\Modules\Fuse.Unturned\English.dat
+C:\dev\C#\FuseMod\UnturnedGame\Unturned\Modules\Fuse.Unturned\Fuse.Unturned.dll.config
+C:\dev\C#\FuseMod\UnturnedGame\Unturned\Modules\Fuse.Unturned\Fuse.Unturned.dll
+C:\dev\C#\FuseMod\Fuse.Unturned\obj\Debug\Fuse.Unturned.csprojAssemblyReference.cache
+C:\dev\C#\FuseMod\Fuse.Unturned\obj\Debug\Fuse.Unturned.Properties.Resources.resources
+C:\dev\C#\FuseMod\Fuse.Unturned\obj\Debug\Fuse.Unturned.csproj.GenerateResource.cache
+C:\dev\C#\FuseMod\Fuse.Unturned\obj\Debug\Fuse.Unturned.csproj.CopyComplete
+C:\dev\C#\FuseMod\Fuse.Unturned\obj\Debug\Fuse.Unturned.dll
