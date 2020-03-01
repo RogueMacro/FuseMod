@@ -66,9 +66,9 @@ namespace Fuse.Properties {
         ///  &lt;DebugMode&gt;false&lt;/DebugMode&gt;
         ///&lt;/Settings&gt;.
         /// </summary>
-        internal static string FuseDefaultConfig {
+        internal static string DefaultConfig {
             get {
-                return ResourceManager.GetString("FuseDefaultConfig", resourceCulture);
+                return ResourceManager.GetString("DefaultConfig", resourceCulture);
             }
         }
     }

@@ -1,14 +1,16 @@
-﻿using SysConsole = System.Console;
+﻿using Fuse.API;
+using Fuse.Core.Console;
+using Fuse.Core.Commands;
+using Fuse.Core.DependencyInjection;
+using Fuse.Core.Utilities;
+using Fuse.Properties;
+using SysConsole = System.Console;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Fuse.Core.Utilities;
-using Fuse.Properties;
-using Fuse.Core.Console;
-using Fuse.Core.Commands;
-using Fuse.API;
+using System.Threading.Tasks;
 
 namespace Fuse.Core.Initialization
 {
@@ -21,26 +23,44 @@ namespace Fuse.Core.Initialization
 
         public static void Initialize(string path)
         {
-            var fm = new FileManager(path);
-            Initialize(fm);
+            var fileManager = new FileManager(path);
+            InitializeAsync(fileManager).RunAsync();
+        }
+
+        public static async Task InitializeAsync(string path)
+        {
+            var fileManager = new FileManager(path);
+            await InitializeAsync(fileManager);
         }
 
         public static void Initialize(FileManager fileManager)
         {
+            InitializeAsync(fileManager).RunAsync();
+        }
+
+        public static async Task InitializeAsync(FileManager fileManager)
+        {
             DisplayInitMessage();
 
-            InitDependencyContainer();
+            await LoadRuntimeAsync();
+
             InitFiles(fileManager);
+
             InitChatHandler();
+
             InitCommandHandler();
+            LoadFuseCommands();
+
             LoadPlugins();
 
             FuseConsole.Success("Initialized FuseMod");
         }
 
-        public static void InitDependencyContainer()
+        public static async Task LoadRuntimeAsync()
         {
-
+            var container = ContainerConfig.Configure();
+            var runtime = new Runtime();
+            await runtime.InitAsync();
         }
 
         public static void InitFiles(FileManager fileManager, bool force=false)
@@ -50,13 +70,12 @@ namespace Fuse.Core.Initialization
 
             fileManager.MoveToNew("Fuse");
 
-            fileManager.WriteToFile("config.xml", Resources.FuseDefaultConfig);
+            if (!fileManager.FileExists("config.xml") || force)
+                fileManager.WriteToFile("config.xml", Resources.DefaultConfig);
         }
 
         private static void InitCommandHandler()
         {
-
-
             var commandHandlers = GetDerivedTypes<CommandHandler>();
 
             commandHandlers.Remove(typeof(CommandHandler));
@@ -104,20 +123,21 @@ namespace Fuse.Core.Initialization
             var version = versionInfo.ProductVersion;
 
             SysConsole.ForegroundColor = ConsoleColor.Cyan;
-            SysConsole.WriteLine($@"FuseMod {version}");
+            SysConsole.WriteLine($@"FuseMod v{version}");
             SysConsole.ResetColor();
+        }
+
+        private static void LoadFuseCommands()
+        {
+            var commands = GetDerivedTypes<ICommand>();
+
+            foreach (var command in commands)
+                CommandHandler.RegisterCommand(command);
         }
 
         private static void LoadPlugins()
         {
-            // Internal Fuse commands
-
-            var commands = GetDerivedTypes<ICommand>();
             
-            foreach (var command in commands)
-                CommandHandler.RegisterCommand(command);
-
-            // 
         }
 
         private static List<Type> GetDerivedTypes<T>()

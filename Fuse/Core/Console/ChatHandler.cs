@@ -6,9 +6,12 @@ namespace Fuse.Core.Console
     {
         public static ChatHandler Current;
 
-        protected virtual void OnInit() { }
+        protected virtual void OnInit()
+        {
+        }
 
         public delegate void OnChatEventHandler(IPlayer player, string text);
+
         public abstract event OnChatEventHandler OnChat;
 
         public abstract void Say(string text, params (string, object)[] args);

@@ -11,6 +11,7 @@ namespace Fuse.Core.Utilities
 
         public bool IsPathValid() => Directory.Exists(Path);
         public bool DirectoryExists(string name) => Directory.Exists(Path.ExtendPath(name));
+        public bool FileExists(string name) => File.Exists(Path.ExtendPath(name));
         public void CreateDirectory(string name) => Directory.CreateDirectory(ExtendPath(name));
         public void CreateFile(string name) => File.Create(ExtendPath(name));
         public void WriteToFile(string filename, string text) => File.WriteAllText(Path.ExtendPath(filename), text);

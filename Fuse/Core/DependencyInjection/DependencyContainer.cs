@@ -1,151 +1,139 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
+﻿using Fuse.API;
+using Unity;
 
 namespace Fuse.Core.DependencyInjection
 {
-    public class DependencyContainer
+    public class DependencyContainer : IDependencyContainer
     {
+        public UnityContainer Container { get; }
+
         public DependencyContainer()
         {
-            Collection = new ServiceCollection();
+            Container = new UnityContainer();
+            Container.RegisterInstance<IDependencyContainer>(this);
         }
 
-        public void AddSingleton<T>(T instance) where T : class
+        public void RegisterInstance<T>(T instance, string name = null)
         {
-            Collection.AddSingleton(instance);
+            // TODO: Add logging
+
+            if (name != null)
+                Container.RegisterInstance(name, instance);
+            else
+                Container.RegisterInstance(instance);
         }
 
-        public object Resolve<T>()
+        public void RegisterSingleton<TBase, TImpl>(string name = null) where TImpl : TBase
         {
-            foreach (var dependency in Collection)
-            {
-                if (dependency.ServiceType == typeof(T))
-                {
-                    System.Console.WriteLine("Resolved: " + dependency.ImplementationInstance + " for " + dependency.ServiceType);
-                    return dependency.ImplementationInstance;
-                }
-                else
-                {
-                    System.Console.WriteLine($"{typeof(T)} is not {dependency.ServiceType}");
-                }
-            }
+            // TODO: Add logging
 
-            return null;
+            if (name != null)
+                Container.RegisterSingleton<TBase, TImpl>(name);
+            else
+                Container.RegisterSingleton<TBase, TImpl>();
+
         }
 
-        public ServiceCollection Collection { get; }
+        public T Resolve<T>()
+        {
+            return Container.Resolve<T>();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //    public DependencyContainer(IContainer container)
+        //    {
+        //        _container = container;
+        //    }
+
+        //    public event EventHandler<LifetimeScopeBeginningEventArgs> ChildLifetimeScopeBeginning;
+        //    public event EventHandler<LifetimeScopeEndingEventArgs> CurrentScopeEnding;
+        //    public event EventHandler<ResolveOperationBeginningEventArgs> ResolveOperationBeginning;
+
+        //    public void AddSingleton<TInterface, TClass>() where TClass : class, TInterface
+        //    {
+        //        var updater = new ContainerBuilder();
+        //        updater.RegisterType<TClass>().As<TInterface>();
+        //        _container = updater.Rebuild(_container);
+        //    }
+
+        //    public void AddSingleton<T>(T instance) where T : class
+        //    {
+        //        //_container.AddSingleton(instance);
+        //    }
+
+        //    public object Resolve<T>()
+        //    {
+        //        //foreach (var dependency in _container)
+        //        //{
+        //        //    if (dependency.ServiceType == typeof(T))
+        //        //    {
+        //        //        System.Console.WriteLine("Resolved: " + dependency.ImplementationInstance + " for " + dependency.ServiceType);
+        //        //        return dependency.ImplementationInstance;
+        //        //    }
+        //        //    else
+        //        //    {
+        //        //        System.Console.WriteLine($"{typeof(T)} is not {dependency.ServiceType}");
+        //        //    }
+        //        //}
+
+        //        return null;
+        //    }
+
+        //    public ILifetimeScope BeginLifetimeScope()
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    public ILifetimeScope BeginLifetimeScope(object tag)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    public ILifetimeScope BeginLifetimeScope(Action<ContainerBuilder> configurationAction)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    public ILifetimeScope BeginLifetimeScope(object tag, Action<ContainerBuilder> configurationAction)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    public object ResolveComponent(ResolveRequest request)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    public void Dispose()
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    public System.Threading.Tasks.ValueTask DisposeAsync()
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+
+        //    private IContainer _container { get; set; }
+
+        //    public IDisposer Disposer => throw new NotImplementedException();
+
+        //    public object Tag => throw new NotImplementedException();
+
+        //    public IComponentRegistry ComponentRegistry => throw new NotImplementedException();
+        //}
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //public class DependencyContainer
-    //{
-    //    private readonly List<IService> instances;
-    //    private readonly List<Type> types;
-
-    //    public DependencyContainer(IEnumerable<IService> instances = null, IEnumerable<Type> types = null)
-    //    {
-    //        this.instances = instances.ToList() ?? new List<IService>();
-    //        this.types = types.ToList() ?? new List<Type>();
-    //    }
-
-    //    public void Register<TInterface, TClass>() where TClass : class, TInterface
-    //    {
-    //        types.Add(typeof(TClass));
-    //    }
-
-    //    public void Register<TInterface>(TInterface value) where TInterface : IService
-    //    {
-    //        instances.Add(value);
-    //    }
-
-    //    public object ResolveInstance<T>()
-    //    {
-    //        foreach (var instance in instances)
-    //        {
-    //            if (instance is T)
-    //                return (T) instance;
-    //        }
-
-    //        return null;
-    //    }
-
-    //    public object ResolveType<T>()
-    //    {
-    //        foreach (var type in types)
-    //        {
-    //            if (type is T)
-    //                return type;
-    //        }
-
-    //        return null;
-    //    }
-
-    //    public object Resolve<T>()
-    //    {
-    //        return ResolveInstance<T>() ?? ResolveType<T>();
-    //    }
-
-    //    public IEnumerable<T> ResolveAll<T>()
-    //    {
-
-    //    }
-    //}
-
-    //public interface IService
-    //{
-
-    //}
-
-    ////public interface IProxyableService
-    ////{
-
-    ////}
-
-    //public interface IServiceProxy<T> : IService
-    //{
-    //    IEnumerable<T> ProxyServices { get; }
-    //}
-
-    //public abstract class ServiceProxy<T> : DynamicObject, IServiceProxy<T> where T : class, IService
-    //{
-    //    public ServiceProxy()
-    //    {
-    //        Container = new DependencyContainer();
-    //    }
-
-    //    public ServiceProxy(IEnumerable<T> instances = null, IEnumerable<Type> types = null)
-    //    {
-    //        Container = new DependencyContainer(instances, types);
-    //    }
-
-    //    public IEnumerable<T> ProxyServices
-    //    {
-    //        get
-    //        {
-    //            return Container.ResolveAll<T>();
-    //        }
-    //    }
-
-    //    public DependencyContainer Container { get; private set; }
-    //}
 }
