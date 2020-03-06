@@ -63,6 +63,18 @@ namespace Fuse.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
         ///&lt;Settings&gt;
+        ///  &lt;DebugMode&gt;true&lt;/DebugMode&gt;
+        ///&lt;/Settings&gt;.
+        /// </summary>
+        internal static string DebugConfig {
+            get {
+                return ResourceManager.GetString("DebugConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;Settings&gt;
         ///  &lt;DebugMode&gt;false&lt;/DebugMode&gt;
         ///&lt;/Settings&gt;.
         /// </summary>

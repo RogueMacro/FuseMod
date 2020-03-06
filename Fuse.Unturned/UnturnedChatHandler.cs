@@ -26,7 +26,7 @@ namespace Fuse.Unturned
             if (!text.StartsWith("/"))
                 return;
 
-            CommandHandler.Current.HandleText(text);
+            //DefaultCommandHandler.Current.HandleText(text);
         }
 
         public override void Say(string text, params (string, object)[] tArgs)

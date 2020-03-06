@@ -1,11 +1,13 @@
 ﻿using Fuse.API;
+using Fuse.Core.Console;
+using System;
 using Unity;
 
 namespace Fuse.Core.DependencyInjection
 {
     public class DependencyContainer : IDependencyContainer
     {
-        public UnityContainer Container { get; }
+        private IUnityContainer Container { get; }
 
         public DependencyContainer()
         {
@@ -13,127 +15,74 @@ namespace Fuse.Core.DependencyInjection
             Container.RegisterInstance<IDependencyContainer>(this);
         }
 
-        public void RegisterInstance<T>(T instance, string name = null)
+        private ILogger Logger
         {
-            // TODO: Add logging
+            get
+            {
+                TryResolve<ILogger>(out var logger);
+                return logger;
+            }
+        }
 
-            if (name != null)
-                Container.RegisterInstance(name, instance);
+        public void RegisterInstance<T>(T instance, string mappingName = null)
+        {
+            Log<T>($"Registering instance <{instance.GetType().Name}> for <{typeof(T).Name}>", mappingName);
+
+            if (mappingName != null)
+                Container.RegisterInstance(mappingName, instance);
             else
                 Container.RegisterInstance(instance);
         }
 
-        public void RegisterSingleton<TBase, TImpl>(string name = null) where TImpl : TBase
+        public void RegisterSingleton<TBase, TImpl>(string mappingName = null) where TImpl : TBase
         {
-            // TODO: Add logging
+            Log<TBase>($"Registering singleton <{typeof(TImpl).Name}> for <{typeof(TBase).Name}>", mappingName);
 
-            if (name != null)
-                Container.RegisterSingleton<TBase, TImpl>(name);
+            if (mappingName != null)
+                Container.RegisterSingleton<TBase, TImpl>(mappingName);
             else
                 Container.RegisterSingleton<TBase, TImpl>();
-
         }
 
-        public T Resolve<T>()
+        public T Resolve<T>(string mappingName = null)
         {
-            return Container.Resolve<T>();
+            Log<T>($"Resolving <{typeof(T).Name}>", mappingName);
+
+            if (IsRegistered<T>(mappingName))
+                return Container.Resolve<T>();
+
+            FuseConsole.Error($"Could not resolve <{typeof(T)}>; mappingName: '{mappingName}'");
+            throw new ServiceNotRegisteredException();
         }
 
+        public bool TryResolve<T>(out T output, string mappingName = null)
+        {
+            Log<T>($"Trying to resolve <{typeof(T).Name}>", mappingName);
 
+            if (IsRegistered<T>(mappingName))
+            {
+                output = Resolve<T>(mappingName);
+                return true;
+            }
 
+            output = default;
+            return false;
+        }
 
+        public bool IsRegistered<T>(string mappingName = null) => Container.IsRegistered<T>(mappingName);
+        public bool IsRegistered(Type type, string mappingName = null) => Container.IsRegistered(type, mappingName);
 
+        private bool IsLogger<T>() => typeof(ILogger).IsAssignableFrom(typeof(T));
 
-
-
-
-
-
-
-
-
-
-        //    public DependencyContainer(IContainer container)
-        //    {
-        //        _container = container;
-        //    }
-
-        //    public event EventHandler<LifetimeScopeBeginningEventArgs> ChildLifetimeScopeBeginning;
-        //    public event EventHandler<LifetimeScopeEndingEventArgs> CurrentScopeEnding;
-        //    public event EventHandler<ResolveOperationBeginningEventArgs> ResolveOperationBeginning;
-
-        //    public void AddSingleton<TInterface, TClass>() where TClass : class, TInterface
-        //    {
-        //        var updater = new ContainerBuilder();
-        //        updater.RegisterType<TClass>().As<TInterface>();
-        //        _container = updater.Rebuild(_container);
-        //    }
-
-        //    public void AddSingleton<T>(T instance) where T : class
-        //    {
-        //        //_container.AddSingleton(instance);
-        //    }
-
-        //    public object Resolve<T>()
-        //    {
-        //        //foreach (var dependency in _container)
-        //        //{
-        //        //    if (dependency.ServiceType == typeof(T))
-        //        //    {
-        //        //        System.Console.WriteLine("Resolved: " + dependency.ImplementationInstance + " for " + dependency.ServiceType);
-        //        //        return dependency.ImplementationInstance;
-        //        //    }
-        //        //    else
-        //        //    {
-        //        //        System.Console.WriteLine($"{typeof(T)} is not {dependency.ServiceType}");
-        //        //    }
-        //        //}
-
-        //        return null;
-        //    }
-
-        //    public ILifetimeScope BeginLifetimeScope()
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-
-        //    public ILifetimeScope BeginLifetimeScope(object tag)
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-
-        //    public ILifetimeScope BeginLifetimeScope(Action<ContainerBuilder> configurationAction)
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-
-        //    public ILifetimeScope BeginLifetimeScope(object tag, Action<ContainerBuilder> configurationAction)
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-
-        //    public object ResolveComponent(ResolveRequest request)
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-
-        //    public void Dispose()
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-
-        //    public System.Threading.Tasks.ValueTask DisposeAsync()
-        //    {
-        //        throw new NotImplementedException();
-        //    }
-
-        //    private IContainer _container { get; set; }
-
-        //    public IDisposer Disposer => throw new NotImplementedException();
-
-        //    public object Tag => throw new NotImplementedException();
-
-        //    public IComponentRegistry ComponentRegistry => throw new NotImplementedException();
-        //}
+        private void Log<TInterface>(string text, string mappingName = null)
+        {
+            if (!IsLogger<TInterface>())
+            {
+                if (mappingName == null)
+                    Logger?.Log(text);
+                else
+                    Logger?.Log(text + ", mapping name: '{mappingName}'");
+            }
+        }
     }
 }

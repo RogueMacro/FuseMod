@@ -1,7 +1,7 @@
 ﻿using Fuse.API;
 using Fuse.Core.Commands;
 using Fuse.Core.Console;
-using Fuse.Core.Exceptions;
+using Fuse.Core.Utilities;
 using UnityEngine;
 
 namespace Fuse.Unturned

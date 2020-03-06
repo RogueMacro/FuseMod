@@ -1,26 +1,27 @@
-﻿using Fuse.Core.Exceptions;
-using System;
+﻿using System;
 
 namespace Fuse.Core.Commands
 {
     public class CommandResult
     {
-        public CommandResult(bool successful)
+        public CommandResult(bool isSuccess)
         {
-            Successful = successful;
+            IsSuccess = isSuccess;
         }
 
-        public CommandResult(bool successful, FuseException exception)
+        public CommandResult(Exception exception)
         {
-            Successful = successful;
+            IsSuccess = false;
             Exception = exception;
         }
 
         public static CommandResult Success => new CommandResult(true);
-        public static CommandResult Fail => new CommandResult(false, new FuseException());
-        public static CommandResult Except<ExceptionType>() => new CommandResult(false, (FuseException) Activator.CreateInstance(typeof(ExceptionType)));
+        public static CommandResult Fail => new CommandResult(new Exception());
+        public static CommandResult FailWithMessage(string text) => new CommandResult(new Exception(text));
+        public static CommandResult Except<T>() => new CommandResult((Exception) Activator.CreateInstance(typeof(T)));
+        public static CommandResult Except<T>(string text) => new CommandResult((Exception) Activator.CreateInstance(typeof(T), text));
 
-        public bool Successful { get; }
-        public FuseException Exception { get; }
+        public bool IsSuccess { get; }
+        public Exception Exception { get; }
     }
 }

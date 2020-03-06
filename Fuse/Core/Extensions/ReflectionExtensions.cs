@@ -18,7 +18,7 @@ namespace Fuse.Core.Extensions
         {
             foreach (var type in assembly.GetDerivedTypes<ICommand>())
             {
-                CommandHandler.RegisterCommand(type);
+                //DefaultCommandHandler.RegisterCommand(type);
             }
         }
     }

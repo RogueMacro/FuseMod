@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Fuse.Core.Utilities
 {
@@ -14,14 +15,29 @@ namespace Fuse.Core.Utilities
             return task.GetAwaiter().GetResult();
         }
 
-        public static void RunAsync(this Task task)
+        public static async Task RunAsync(this Task task)
         {
-            Task.Run(async () => await task);
+            await Task.Run(async () => await task);
         }
 
-        public static T RunAsync<T>(this Task<T> task)
+        public static async Task<T> RunAsync<T>(this Task<T> task)
         {
-            return Task.Run(async () => await task).Result;
+            return await Task.Run(async () => await task);
+        }
+
+        public static async Task<T> RunAsync<T>(this Func<T> func, params object[] args)
+        {
+            return (T) await Task.Run(() => func.DynamicInvoke(args));
+        }
+
+        public static async Task<T> RunAsync<T>(this Func<T> func)
+        {
+            return await Task.Run(func.Invoke);
+        }
+
+        public static async Task RunAsync(this Action action)
+        {
+            await Task.Run(action);
         }
     }
 }

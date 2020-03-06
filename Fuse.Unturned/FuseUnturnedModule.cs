@@ -1,4 +1,5 @@
-﻿using Fuse.Core.Initialization;
+﻿using Fuse.Core;
+using Fuse.Core.Initialization;
 using Fuse.Core.Utilities;
 using SDG.Framework.Modules;
 using SDG.Unturned;
@@ -12,11 +13,10 @@ namespace Fuse.Unturned
         public void initialize()
         {
             var dllPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
             var fileManager = new FileManager(dllPath);
             fileManager.Cd("../../Servers".ExtendPath(Provider.serverID));
 
-            FuseInitializer.Initialize(fileManager);
+            new Runtime().Init();
         }
 
         public void shutdown()

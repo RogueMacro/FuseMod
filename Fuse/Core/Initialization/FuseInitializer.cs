@@ -1,7 +1,6 @@
 ﻿using Fuse.API;
 using Fuse.Core.Console;
 using Fuse.Core.Commands;
-using Fuse.Core.DependencyInjection;
 using Fuse.Core.Utilities;
 using Fuse.Properties;
 using SysConsole = System.Console;
@@ -41,24 +40,24 @@ namespace Fuse.Core.Initialization
         public static async Task InitializeAsync(FileManager fileManager)
         {
             DisplayInitMessage();
-
+            
             await LoadRuntimeAsync();
-
+            
             InitFiles(fileManager);
-
+            
             InitChatHandler();
-
+            
             InitCommandHandler();
+            
             LoadFuseCommands();
-
+            
             LoadPlugins();
-
+            
             FuseConsole.Success("Initialized FuseMod");
         }
 
         public static async Task LoadRuntimeAsync()
         {
-            var container = ContainerConfig.Configure();
             var runtime = new Runtime();
             await runtime.InitAsync();
         }
@@ -76,23 +75,23 @@ namespace Fuse.Core.Initialization
 
         private static void InitCommandHandler()
         {
-            var commandHandlers = GetDerivedTypes<CommandHandler>();
+            //var commandHandlers = GetDerivedTypes<DefaultCommandHandler>();
 
-            commandHandlers.Remove(typeof(CommandHandler));
+            //commandHandlers.Remove(typeof(DefaultCommandHandler));
 
-            if (commandHandlers.Count == 0)
-            {
-                FuseConsole.Error("Could not find any CommandHandlers");
-            }
-            else if (commandHandlers.Count > 1)
-            {
-                FuseConsole.Error("Too many CommandHandlers detected");
-            }
-            else
-            {
-                Type type = commandHandlers.Single();
-                CommandHandler.Current = (CommandHandler) Activator.CreateInstance(type);
-            }
+            //if (commandHandlers.Count == 0)
+            //{
+            //    FuseConsole.Error("Could not find any CommandHandlers");
+            //}
+            //else if (commandHandlers.Count > 1)
+            //{
+            //    FuseConsole.Error("Too many CommandHandlers detected");
+            //}
+            //else
+            //{
+            //    Type type = commandHandlers.Single();
+            //    DefaultCommandHandler.Current = (DefaultCommandHandler)Activator.CreateInstance(type);
+            //}
         }
 
         private static void InitChatHandler()
@@ -129,10 +128,10 @@ namespace Fuse.Core.Initialization
 
         private static void LoadFuseCommands()
         {
-            var commands = GetDerivedTypes<ICommand>();
+            //var commands = GetDerivedTypes<ICommand>();
 
-            foreach (var command in commands)
-                CommandHandler.RegisterCommand(command);
+            //foreach (var command in commands)
+            //    DefaultCommandHandler.RegisterCommand(command);
         }
 
         private static void LoadPlugins()
